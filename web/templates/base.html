@@ -1,0 +1,60 @@
+{% extends '/bootstrap/base.html' %}
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static',filename='styles.css')}}?t=1241345" type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" type="text/css">
+{% endblock %}
+
+{% block title %}
+	{% if title %}{{ title }} - ego.re{% else %}ego.re{% endif %}
+{% endblock %}
+
+{% block navbar %}
+	<nav class="navbar navbar-default">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+				<a class="navbar-brand" href="{{ url_for('index') }}">ego.re</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url_for('index') }}">Home</a></li>
+					<li><a href="{{ url_for('about') }}">About</a></li>
+					<li><a href="{{ url_for('users') }}">Users</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{% if current_user.is_authenticated %}
+					<li><a href="{{ url_for('logout') }}">Logout</a></li>
+					<li><a href="{{ url_for('profile') }}">Profile</a></li>
+					{% if current_user.is_privileged() %}
+					<li><a href="{{ url_for('admin') }}">Admin</a></li>
+					{% endif %}
+					{% elif current_user.is_anonymous %}
+					<li><a href="{{ url_for('register') }}">Register</a></li>
+					<li><a href="{{ url_for('login') }}">Login</a></li>
+					{% endif %}
+                </ul>
+			</div>
+		</div>
+	</nav>
+{% endblock %}
+
+{% block content %}
+	<div class="container">
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+			<div class="alert alert-info" role="alert">{{ message }}</div>
+			{% endfor %}
+		{% endif %}
+		{% endwith %}
+		{# application content needs to be provided in the app_content block #}
+		{% block app_content %}{% endblock %}
+	</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+header,main,nav,footer{display:block;}
+.nav .navbar-nav a:hover{
+	background-color: gray;
+}
+body{
+	background-color: transparent;
+}
+.username_Moderator{
+	color:green;
+	font-weight:bold;
+	font-family:"Hack";
+	font-style:italic;
+}
+.username_Admin{
+	color:#8b0000;
+	font-weight:bold;
+	font-style:italic;
+	font-family:"Hack";
+}
+.admin_table table{
+	margin-left:auto;
+	margin-right:auto;
+	width:60%;
+	border:1px purple solid;
+	margin-bottom:1em;
+	border-collapse:collapse;
+}
+.admin_table td, th{
+	padding:0.5em;
+	border:1px purple solid;
+}
+.admin_table tr:nth-of-type(odd) td, tr:nth-of-type(odd) th{
+	background-color:#D7E8E9;
+}
+.admin_table caption{
+	margin:1em;
+	font-weight:bold;
+	font-size:120%;
+}

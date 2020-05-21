@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<h1>Welcome to ego.re{% if current_user.is_authenticated %}, {{current_user.username}}{% endif %}!</h1>
+	<p>This is pretty much a testing site for right now. Final project in progress!</p>
+</div>
+{% endblock %}

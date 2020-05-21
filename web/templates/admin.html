@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+	<h1>oh hey admin man</h1>
+	<h2>how you doin, {{current_user.username}}?</h2>
+	<table>
+		<caption>Users</caption>
+		<tr>
+			<th>Username</th>
+			<th>Mod/Admin</th>
+		</tr>
+		{% for user in users %}
+		<tr>
+			<th><a href="{{url_for('user',username=user.username)}}">{{user.username}}</th>
+			<th>{{user.is_privileged()}}</th>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

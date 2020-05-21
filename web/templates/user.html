@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+	<h1>User: <text class="username_{{user.get_role()}}">{{user.username}}</text></h1>
+	<hr>
+	{% for post in posts %}
+	<p class="post-text">
+		{{ post.author.username }} posted: <b>{{post.file_name}}</b>
+	</p>
+	{% endfor %}
+</div>
+{% endblock %}
