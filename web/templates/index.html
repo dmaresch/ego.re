@@ -1,7 +1,30 @@
 {% extends "base.html" %}
-{% block content %}
-<div class="container">
-	<h1>Welcome to ego.re{% if current_user.is_authenticated %}, {{current_user.username}}{% endif %}!</h1>
-	<p>This is pretty much a testing site for right now. Final project in progress!</p>
-</div>
-{% endblock %}
+{%- block content %}
+{{super()}}
+<main class="container">
+	<div class="box">
+		<h1>Welcome to ego.re{% if current_user.is_authenticated %}, {{current_user.username}}{% endif %}!</h1>
+		<hr>
+		<h2>Who are we?</h2>
+	</div>
+	<!--
+	<div class="columns">
+		<div class="column quarter">
+			<div class="box">
+				<h1>text1</h1>
+			</div>
+		</div>
+		<div class="column">
+			<div class="box">
+				<h1>text1</h1>
+			</div>
+		</div>
+	</div>
+	-->
+	<div class="columns">
+		<div class="column third"><div class="box"><p class="description">Developers</p><img src="{{ url_for('.static',filename='img1.png')}}" /></div></div>
+		<div class="column third"><div class="box"><p class="description">Security Specialists</p><img src="{{ url_for('.static',filename='img2.png')}}" /></div></div>
+		<div class="column third"><div class="box"><p class="description">gamers</p><img src="{{ url_for('.static',filename='img3.png')}}" /></div></div>
+	</div>
+</main>
+{%- endblock content %}

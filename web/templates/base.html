@@ -1,7 +1,34 @@
 {% extends '/bootstrap/base.html' %}
 {% block styles %}
 {{super()}}
-<link rel="stylesheet" href="{{url_for('.static',filename='styles.css')}}?t=1241345" type="text/css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167367608-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167367608-1');
+</script>
+<link rel="apple-touch-icon" sizes="57x57" href="{{url_for('.static',filename='/apple-icon-57x57.png')}}">
+<link rel="apple-touch-icon" sizes="60x60" href="{{url_for('.static',filename='/apple-icon-60x60.png')}}">
+<link rel="apple-touch-icon" sizes="72x72" href="{{url_for('.static',filename='/apple-icon-72x72.png')}}">
+<link rel="apple-touch-icon" sizes="76x76" href="{{url_for('.static',filename='/apple-icon-76x76.png')}}">
+<link rel="apple-touch-icon" sizes="114x114" href="{{url_for('.static',filename='/apple-icon-114x114.png')}}">
+<link rel="apple-touch-icon" sizes="120x120" href="{{url_for('.static',filename='/apple-icon-120x120.png')}}">
+<link rel="apple-touch-icon" sizes="144x144" href="{{url_for('.static',filename='/apple-icon-144x144.png')}}">
+<link rel="apple-touch-icon" sizes="152x152" href="{{url_for('.static',filename='/apple-icon-152x152.png')}}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{url_for('.static',filename='/apple-icon-180x180.png')}}">
+<link rel="icon" type="image/png" sizes="192x192"  href="{{url_for('.static',filename='/android-icon-192x192.png')}}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{url_for('.static',filename='/favicon-32x32.png')}}">
+<link rel="icon" type="image/png" sizes="96x96" href="{{url_for('.static',filename='/favicon-96x96.png')}}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{url_for('.static',filename='/favicon-16x16.png')}}">
+<link rel="manifest" href="{{url_for('.static',filename='/manifest.json')}}">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="{{url_for('.static',filename='/ms-icon-144x144.png')}}">
+<meta name="theme-color" content="#ffffff">
+
+<link rel="stylesheet" href="{{url_for('.static',filename='styles.css')}}?v=3" type="text/css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css" type="text/css">
 {% endblock %}
 
@@ -10,7 +37,8 @@
 {% endblock %}
 
 {% block navbar %}
-	<nav class="navbar navbar-default">
+<div class="container-fluid">
+	<nav class="navbar navbar-dark bg-dark">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
@@ -43,9 +71,10 @@
 			</div>
 		</div>
 	</nav>
+</div>
 {% endblock %}
 
-{% block content %}
+{%- block content %}
 	<div class="container">
 		{% with messages = get_flashed_messages() %}
 		{% if messages %}
@@ -57,4 +86,10 @@
 		{# application content needs to be provided in the app_content block #}
 		{% block app_content %}{% endblock %}
 	</div>
-{% endblock %}
+{%- endblock content %}
+{%- block footer %}
+	<footer>
+		Copyright &copy; Domanik Maresch<br>
+		<a href="mailto:dmaresch@ego.re">dmaresch@ego.re</a>
+	</footer>
+{%- endblock footer %}

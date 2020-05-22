@@ -9,6 +9,7 @@ from werkzeug.urls import url_parse
 @app.route('/')
 @app.route('/index')
 def index():
+	#flash("test flash!")
 	return render_template("index.html",title='Home')
 
 @app.route('/about')

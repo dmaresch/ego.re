@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container">
-	<h1>About</h1>
-	<p>testo testo testo</p>
-</div>
+{{super()}}
+<main class="container">
+	<div class="box">
+		<h1 class="header">About</h1><hr>
+		<p>testo testo testo</p>
+	</div>
+</main>
 {% endblock %}

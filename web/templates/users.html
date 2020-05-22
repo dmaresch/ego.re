@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container">
-	<table>
-		<caption>Users</caption>
-		<tr>
-			<th>Username</th>
-			<th>Role</th>
-		</tr>
-		{% for user in users %}
-		<tr>
-			<th><a href="{{url_for('user',username=user.username)}}">{{user.username}}</th>
-			<th>{{user.get_role()}}</th>
-		</tr>
-		{% endfor %}
-	</table>
-</div>
+{{super()}}
+<main class="container">
+	<div class="box">
+		<h1>Users</h1>
+		<table>
+			<tr class="title">
+				<th class="title">Username</th>
+				<th class="title">Role</th>
+			</tr>
+			{% for user in users %}
+			<tr>
+				<th><a href="{{url_for('user',username=user.username)}}" rel="ugc">{{user.username}}</th>
+				<th>{{user.get_role()}}</th>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</main>
 {% endblock %}

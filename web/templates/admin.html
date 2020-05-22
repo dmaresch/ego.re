@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
+{{super()}}
+<main class="container">
 	<h1>oh hey admin man</h1>
 	<h2>how you doin, {{current_user.username}}?</h2>
 	<table>
@@ -16,5 +17,5 @@
 		</tr>
 		{% endfor %}
 	</table>
-</div>
+</main>
 {% endblock %}
