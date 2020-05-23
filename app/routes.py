@@ -3,7 +3,7 @@ from app import app,db
 from flask import render_template,flash,redirect,url_for,send_from_directory,request
 from forms import LoginForm,RegistrationForm
 from flask_login import current_user, login_user, logout_user,login_required
-from app.models import User
+from app.models import User,Role
 from werkzeug.urls import url_parse
 
 @app.route('/')
@@ -24,7 +24,7 @@ def register():
 	if form.validate_on_submit():
 		user = User(username=form.username.data,email=form.email.data)
 		user.set_password(form.password.data)
-		user.set_role(1)
+		user.set_role(Role.query.get(1))
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
