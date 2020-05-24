@@ -1,10 +1,12 @@
 import os
 from app import app,db
 from flask import render_template,flash,redirect,url_for,send_from_directory,request
-from forms import LoginForm,RegistrationForm
+from forms import LoginForm,RegistrationForm,UploadForm
 from flask_login import current_user, login_user, logout_user,login_required
-from app.models import User,Role
+from app.models import User,Role,File
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
+import hashlib
 
 @app.route('/')
 @app.route('/index')
@@ -84,3 +86,39 @@ def set_response_headers(response):
 @app.route('/users')
 def users():
 	return render_template('users.html',users=User.query.limit(50).all())
+
+@app.route('/uploads/<foldername>/<filename>')
+def uploaded_file(foldername,filename):
+	return send_from_directory(app.config['UPLOAD_FOLDER'] + foldername,filename)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+@app.route('/upload',methods=['GET','POST'])
+@login_required
+def upload_file():
+	form=UploadForm()
+	if form.validate_on_submit():
+		if form.file.data is None or form.file.data.filename =='':
+			flash('No selected file.')
+			return redirect(url_for('upload'))
+		file=request.files['file']
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			filetype=filename.rsplit('.',1)[1].lower()
+			directory=app.config['UPLOAD_FOLDER'] + hashlib.md5(current_user.username).hexdigest()
+			if not os.path.exists(directory):
+				os.mkdir(directory)
+			file.save(os.path.join(directory,filename))
+			filehash = hashlib.md5(file.read()).hexdigest()
+			os.rename(os.path.join(directory,filename),os.path.join(directory,filehash+'.'+filetype))
+			f=File(file_name=filename,file_hash=filehash,file_type=filetype,uploader=current_user.get_id())
+			db.session.add(f)
+			db.session.commit()
+			if(form.prof_pic.data is True):
+				current_user.set_profile_image(f.id)
+				db.session.add(current_user)
+				db.session.commit()
+			return redirect(url_for('uploaded_file',foldername=hashlib.md5(current_user.username).hexdigest(),filename=f.file_hash+'.'+f.file_type))
+	return render_template('upload.html',form=form)

@@ -2,6 +2,7 @@ from app import db,login
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+import hashlib
 
 class User(db.Model):
 	id = db.Column(db.Integer,primary_key=True)
@@ -10,7 +11,8 @@ class User(db.Model):
 	password_hash=db.Column(db.String(128))
 	posts=db.relationship('Post',backref='author',lazy='dynamic')
 	role=db.Column(db.Integer,db.ForeignKey('role.id'),default=1)
-
+	profile_img=db.Column(db.Integer,db.ForeignKey('file.id'))
+	hashed_name=db.Column(db.String(64))
 	def __repr__(self):
 		return '<User {}>'.format(self.username)
 
@@ -46,6 +48,18 @@ class User(db.Model):
 		r=Role.query.get(self.role)
 		return r.name
 
+	def set_profile_image(self, id):
+		self.profile_img=id
+
+	def get_profile_img(self):
+		return File.query.get(self.profile_img)
+
+	def get_hashed_name(self):
+		return self.hashed_name
+
+	def set_hashed_name(self):
+		self.hashed_name=hashlib.md5(self.username).hexdigest()
+
 class Post(db.Model):
 	id=db.Column(db.Integer,primary_key=True)
 	timestamp=db.Column(db.DateTime,index=True,default=datetime.utcnow)
@@ -56,6 +70,16 @@ class Post(db.Model):
 
 	def __repr__(self):
 		return '<Post {}>'.format(self.file_name)
+
+class File(db.Model):
+	id=db.Column(db.Integer,primary_key=True)
+	uploader=db.Column(db.Integer,db.ForeignKey('user.id'),index=True)
+	file_name=db.Column(db.String(255))
+	file_hash=db.Column(db.String(64))
+	file_type=db.Column(db.String(5))
+
+	def __repr__(self):
+		return '<File {}>'.format(self.file_name)
 
 class Role(db.Model):
 	id=db.Column(db.Integer, primary_key=True)

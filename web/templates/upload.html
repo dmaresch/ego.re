@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+{{super()}}
+<main class="container">
+    <div class="box">
+	<h1>Sign in</h1>
+	<form action="" method="post" class="box" enctype="multipart/form-data" novalidate>
+		{{form.hidden_tag()}}
+		<p>
+            {{ form.file.label }}<br>
+            {{ form.file }}<br>
+            {% for error in form.file.errors %}
+            <div class="alert alert-danger" role="alert">
+            	{{error}}
+            </div>
+            {% endfor %}
+        </p>
+        <p>{{ form.prof_pic() }} {{ form.prof_pic.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    </div>
+</main>
+{% endblock %}

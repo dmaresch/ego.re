@@ -4,7 +4,8 @@
 {{super()}}
 <main class="container">
 	<div class="box">
-		<h1>User: <text class="username_{{user.get_role()}}">{{user.username}}</text></h1>
+		<a href="{{url_for('upload_file')}}">Upload profile picture</a>
+		<h1>{% if user.get_profile_img() %}<image src="{{ url_for('uploaded_file',foldername=user.get_hashed_name(),filename=user.get_profile_img().file_hash+'.'+user.get_profile_img().file_type) }}">{% endif %}<text class="username_{{user.get_role()}}">{{user.username}}</text></h1>
 		<hr>
 		{% for post in posts %}
 		<p class="post-text">

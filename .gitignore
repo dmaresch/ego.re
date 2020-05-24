@@ -2,3 +2,4 @@ app.db
 migrations/
 config.py
 venv/
+web/uploads/
