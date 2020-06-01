@@ -54,6 +54,11 @@ class User(db.Model):
 	def get_profile_img(self):
 		return File.query.get(self.profile_img)
 
+	def get_profile_img_link(self):
+		f=File.query.get(self.profile_img)
+		fhash=f.file_hash
+		return fhash+'.'+f.file_type
+
 	def get_hashed_name(self):
 		return self.hashed_name
 

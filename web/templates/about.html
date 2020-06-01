@@ -4,7 +4,13 @@
 <main class="container">
 	<div class="box">
 		<h1 class="header">About</h1><hr>
-		<p>testo testo testo</p>
+		
+		<img src="{{url_for('.static',filename='pepethonk.png')}}" />
+		
+		<p>Welcome. This site is mainly a testing grounds currently, but it's intended purpose is to have self-hosted screenshot uploading service for myself, but otherwise, it may one day become useful for other purposes. This project itself was to learn about how to use a Flask backend to serve frontend and have a dynamic system, instead of just pure static html. My next steps with this site will actually be adding in SMTP support so that when a user registers, it will automatically email. I have SMTP setup itself, with POP3 and IMAP4 as well, but I do not have the configurations setup quite yet. Maybe some day in the future I'll end up using this system, Flask, and a few other front-end libraries to make a nice portfolio page for myself.</p>
+		<hr>
+		<h2>Thank you.</h2>
+		<p>This site was actually a massive headache to make. From realizing that when I'm reading files to calculate an MD5 sum to rename the file to, I was reading 0 bytes, and getting the returned hash of, well, nothing. All in all, this uses quite a few frameworks from Flask.</p>
 	</div>
 </main>
 {% endblock %}

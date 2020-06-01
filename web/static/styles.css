@@ -109,6 +109,11 @@ footer{
 	flex:none;
 	width:33%;
 }
+img{
+	border-radius:6px;
+	text-align:center;
+	justify-content: center;
+}
 .box img{
 	max-width:100%;
 	border-radius:6px;

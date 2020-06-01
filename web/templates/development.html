@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="container">
+	<div class="box">
+		<h1>Development</h1>
+		<hr>
+		<img src="{{url_for('.static',filename='devImg.png')}}" />
+		<p>This site was constructed over a two week period using mainly Bootstrap and Flask. Each page that is being served has been written by hand, with template files to inherit base pages. This cuts down on the individual page sizes, and allows each individual page to be edited and built upon much easier.</p>
+		<br>
+		<p>This also has database connections to a local SQLite file that is managed through custom models that have been made in Python. There is a flask extension known as Flask-Migrations and Flask-SQLAlchemy, which helps out alot with quickly setting up each page, and each backend module. Flask-Migrations allows a quick way to parse through the code, scan to see if any database modifications have been made, and if there have been, setup a script that will automatically update the tables in the SQLite file. SQLAlchemy allows for the actual interactions with the file (fetching data, updating data, appending data, etc.). This site would have been much more annoying to create if it hadn't been for those two tools.</p>
+		<br>
+		<br>
+		<small>devnote: hey please excuse the trash attempt to make the image not have white bg on a darkmode site. my magic wand tool didn't work for it.</small>
+	</div>
+</main>
+{% endblock content %}

@@ -44,7 +44,7 @@ def login():
 		if user and user.check_password(password=form.password.data):
 			login_user(user)
 			next_page = request.args.get('next')
-			return redirect(next_page or url_for('profile'))
+			return redirect(next_page or url_for('user',username=user.username))
 		flash("Invalid username or password")
 		return redirect(url_for('login'))
 	return render_template('login.html',title='Sign In',form=form)
@@ -89,6 +89,7 @@ def users():
 
 @app.route('/uploads/<foldername>/<filename>')
 def uploaded_file(foldername,filename):
+	print(str(app.config['UPLOAD_FOLDER'] + foldername))
 	return send_from_directory(app.config['UPLOAD_FOLDER'] + foldername,filename)
 
 def allowed_file(filename):
@@ -110,15 +111,29 @@ def upload_file():
 			directory=app.config['UPLOAD_FOLDER'] + hashlib.md5(current_user.username).hexdigest()
 			if not os.path.exists(directory):
 				os.mkdir(directory)
+
 			file.save(os.path.join(directory,filename))
-			filehash = hashlib.md5(file.read()).hexdigest()
+			filehash=None
+			with open(os.path.join(directory,filename)) as f:
+				filehash = hashlib.md5(f.read(400)).hexdigest()
+				f.close()
+
 			os.rename(os.path.join(directory,filename),os.path.join(directory,filehash+'.'+filetype))
 			f=File(file_name=filename,file_hash=filehash,file_type=filetype,uploader=current_user.get_id())
+
 			db.session.add(f)
 			db.session.commit()
+			current_user.set_hashed_name()
+			db.session.add(current_user)
+			db.session.commit()
+
 			if(form.prof_pic.data is True):
 				current_user.set_profile_image(f.id)
 				db.session.add(current_user)
 				db.session.commit()
-			return redirect(url_for('uploaded_file',foldername=hashlib.md5(current_user.username).hexdigest(),filename=f.file_hash+'.'+f.file_type))
-	return render_template('upload.html',form=form)
+			return redirect(url_for('user',username=current_user.username))
+	return render_template('upload.html',title='Upload',form=form)
+
+@app.route('/development')
+def development():
+	return render_template('development.html')
